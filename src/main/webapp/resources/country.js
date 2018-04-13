@@ -15,7 +15,7 @@ Ext.onReady(function () {
         fields: ['id', 'country_name'],
         proxy: {
             type: 'ajax',
-            url: '/petshop/load',
+            url: '/petshop/loadcountry',
             reader: {
                 type: 'json',
                 root: 'books'
@@ -199,8 +199,8 @@ Ext.onReady(function () {
                 method: 'POST',
                 jsonData: values,
                 success: function (response) {
-                    store.getStore().load()
-                    //store.load();
+                    store.getStore().load();
+                    
                 }
             });
             win.close();

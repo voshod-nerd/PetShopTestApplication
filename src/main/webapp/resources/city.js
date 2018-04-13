@@ -25,7 +25,7 @@ Ext.onReady(function () {
         model: 'TechZoo.model.Country',
         proxy: {
             type: 'ajax',
-            url: '/petshop/load',
+            url: '/petshop/loadcountry',
             reader: {
                 type: 'json',
                 root: 'books'
