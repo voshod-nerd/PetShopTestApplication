@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.voshodnerd.petshoptestapp.mapper.CityMapper" >
+    <cache />
+
+    <!--    result maps     -->
+    <resultMap id="BaseResultMap" type="com.voshodnerd.petshoptestapp.model.City" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="city_name" property="city_name" jdbcType="VARCHAR" />
+        <result column="idcountry" property="idcountry" jdbcType="INTEGER" />
+ 
+        <!--        one to one     -->
+        <association property="country" column="idcountry" javaType="com.voshodnerd.petshoptestapp.model.Country"
+                     select="selectCountryFromCity"/>           
+    </resultMap>
+    
+    <!-- one to one select  -->
+    <select id="selectWithCountry" resultMap="BaseResultMap"  >
+    SELECT
+        city.id,
+        city.city_name,
+        city.idcountry
+    FROM
+        city
+    
+    </select>
+    
+    
+
+    <select id="selectCountryFromCity"
+            parameterType="INTEGER" 
+            resultType="com.voshodnerd.petshoptestapp.model.Country">
+        SELECT
+        country.id,
+        country.country_name
+        FROM
+        country
+        WHERE
+        id = #{id}
+    </select>
+
+
+
+    <select id="getAllCity" resultType="City">
+        SELECT 
+        City.id,
+        City.city_name,
+        City.idcountry  
+        FROM City 
+    </select>
+  
+    <select id="getCityByName" resultType="City">
+        SELECT 
+        City.id,
+        City.city_name,          
+        FROM City where City.city_name=#{city_name}
+    
+    </select>
+    
+     <delete id="deleteCity" parameterType="City">
+        DELETE from CITY WHERE ID=#{id}
+      </delete>
+    
+  
+    <insert id="insertCity" parameterType="City">
+        INSERT INTO City ( city_name,idcountry) 
+        VALUES (#{city_name},#{idcountry})
+    </insert>
+  
+    <update id="updateCity" parameterType="City">
+        UPDATE CITY SET
+        city_name=#{city_name},
+        idcountry=#{idcountry}
+        where id=#{id}
+      
+    </update>
+  
+
+
+</mapper>
+

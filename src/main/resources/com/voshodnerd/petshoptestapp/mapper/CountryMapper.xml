@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.voshodnerd.petshoptestapp.mapper.CountryMapper" >
+    <cache />
+
+
+    <!--    result maps     -->
+    <resultMap id="ResultMap" type="com.voshodnerd.petshoptestapp.model.Country" >
+        <id column="id" property="id"  />
+        <result column="country_name" property="country_name" />
+        <!--    collections of Contoh     -->
+        <collection property="cities" ofType="com.voshodnerd.petshoptestapp.model.City"
+                    column="idcountry" select="selectCityFromCountry" />
+    </resultMap>
+    
+    
+     <select id="selectCityFromCountry"
+          parameterType="INTEGER"
+          resultType="com.voshodnerd.petshoptestapp.model.City">
+        SELECT
+            id,
+            city_name,
+            idcountry
+        FROM
+            city
+        WHERE
+            idcountry = #{idcountry}
+    </select>
+
+
+    <select id="getAllCountry" resultType="Country">
+        SELECT 
+        Country.id,
+        Country.country_name      
+        FROM Country
+    
+    </select>
+  
+    <select id="getCountryByName" resultType="Country">
+        SELECT 
+        Country.id,
+        Country.country_name      
+        FROM Country where Country.country_name=#{name}
+    
+    </select>
+    
+      <delete id="deleteCountry" parameterType="Country">
+        DELETE from COUNTRY WHERE ID=#{id}
+      </delete>
+    
+  
+    <insert id="insertCountry" parameterType="Country">
+        INSERT INTO COUNTRY ( country_name) 
+        VALUES (#{country_name})
+    </insert>
+  
+    <update id="updateCountry" parameterType="Country">
+        UPDATE COUNTRY SET
+        country_name=#{country_name}
+        where id=#{id}
+      
+    </update>
+  
+
+
+</mapper>
+
